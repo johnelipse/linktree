@@ -118,7 +118,7 @@ export function AddPlatformDialog({
         <form onSubmit={handleSubmit(submit)} className="space-y-6 py-4">
           <div className="space-y-2">
             <Input
-              placeholder={getPlaceholder()}
+              placeholder={"enter username"}
               //   value={username}
               //   onChange={(e) => setUsername(e.target.value)}
               className="h-12"

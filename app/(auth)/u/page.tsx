@@ -1,10 +1,10 @@
-import PreviewPage from "@/components/preview-page";
+import Welcome from "@/components/username-page";
 import React from "react";
 
 export default function page() {
   return (
     <div>
-      <PreviewPage />
+      <Welcome />
     </div>
   );
 }

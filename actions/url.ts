@@ -1,16 +1,27 @@
 "use server";
 
+import { authOptions } from "@/lib/auth";
 import { db } from "@/prisma/db";
 import { LinkProps, UpdateLinkProps } from "@/types/type";
+import { getServerSession } from "next-auth";
 
 export async function createUrl(data: LinkProps) {
   try {
+    const session = await getServerSession(authOptions);
+    if (!session) {
+      return {
+        status: 404,
+        error: "Session not available",
+      };
+    }
+    const id = session.user.id;
     const newUrl = await db.linkUrl.create({
       data: {
         url: data.url,
         title: data.title,
         image: data.image,
         link: data.link,
+        userId: id,
       },
     });
     return {

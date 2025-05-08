@@ -1,30 +1,28 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Handle, LinkUrl } from "@/lib/generated/prisma";
 import { getIcon } from "@/lib/get-icon";
-import { Instagram, TwitterIcon as TikTok, MoreHorizontal } from "lucide-react";
+import { UserProps } from "@/types/type";
 
-export function MobilePreview({
-  urls,
-  handles,
-}: {
-  urls: LinkUrl[];
-  handles: Handle[];
-}) {
-  const urlsToDisplay = urls.filter((url) => url.isPublic === true);
-  const handlesToDisplay = handles.filter((handle) => handle.isPublic === true);
+export function MobilePreview({ user }: { user: UserProps | null }) {
+  const urlsToDisplay = user?.linkUrls.filter((url) => url.isPublic === true);
+  const handlesToDisplay = user?.handles.filter(
+    (handle) => handle.isPublic === true
+  );
   return (
     <div className="hidden lg:flex w-[350px] border-l p-6 items-center justify-center">
       <div className="w-[280px] h-[500px] rounded-3xl border shadow-sm overflow-hidden bg-white">
         <div className="flex flex-col items-center p-6 pt-10 space-y-4">
           <Avatar className="h-20 w-20 rounded-full border">
-            <AvatarImage src="/placeholder.svg" alt="@johnelipse" />
+            <AvatarImage
+              src={user?.image as string}
+              alt={user?.username as string}
+            />
             <AvatarFallback>JE</AvatarFallback>
           </Avatar>
-          <h3 className="text-lg font-medium">@johnelipse</h3>
+          <h3 className="text-lg font-medium">@{user?.username}</h3>
           <div className="flex items-center gap-2">
-            {handlesToDisplay.map((handle) => {
+            {handlesToDisplay?.map((handle) => {
               return (
                 <Button
                   key={handle.id}
@@ -38,7 +36,7 @@ export function MobilePreview({
             })}
           </div>
           <div className="grid gap-4 grid-cols-1">
-            {urlsToDisplay.map((url) => {
+            {urlsToDisplay?.map((url) => {
               return (
                 <Card className="w-full">
                   <CardContent className="p-4 flex items-center justify-between">
