@@ -11,8 +11,6 @@ export default async function FrontLayout({
   const session = await getServerSession(authOptions);
   if (!session) {
     redirect("/register");
-  } else {
-    redirect("/dashboard");
   }
   return <div>{children}</div>;
 }
